@@ -39,7 +39,11 @@ function iniciarJogo() {
   let ultimaRespostaCerta = null;
 
   while (rodadaAtual < perguntas.length) {
-    console.log(`\nRODADA ${rodadaAtual + 1} - Prêmio: R$${premiacoes[rodadaAtual].toLocaleString("pt-BR")}`);
+    console.log(`\n==============================`);
+    console.log(`JOGADOR: ${nome}`);
+    console.log(`RODADA ${rodadaAtual + 1}`);
+    console.log(`Prêmio desta rodada: R$${premiacoes[rodadaAtual].toLocaleString("pt-BR")}`);
+    console.log(`==============================`);
 
     const rodada = perguntas[rodadaAtual];
     const perguntaIndex = Math.floor(Math.random() * rodada.length);
@@ -52,26 +56,29 @@ function iniciarJogo() {
     const resposta = readline.questionInt("Digite o número da resposta: ");
 
     if (resposta === 0) {
-      console.log(`\nVocê escolheu parar. Saiu com R$${premioAtual.toLocaleString("pt-BR")}`);
+      console.log(`\nVocê escolheu PARAR.`);
+      console.log(`Resultado: PAROU com R$${premioAtual.toLocaleString("pt-BR")}`);
       break;
     } else if (resposta === pergunta.respostaCerta) {
       premioAtual = premiacoes[rodadaAtual];
       ultimaRespostaCerta = pergunta.opcoes[pergunta.respostaCerta - 1];
-      console.log("Resposta correta!");
+      console.log("\nResultado: ACERTOU!");
+      console.log(`Você ganhou R$${premioAtual.toLocaleString("pt-BR")} nesta rodada.`);
       rodadaAtual++;
     } else {
-      console.log("Resposta incorreta!");
       ultimaRespostaCerta = pergunta.opcoes[pergunta.respostaCerta - 1];
       premioAtual = 0;
+      console.log("\nResultado: ERROU!");
+      console.log("Você perdeu tudo. :(");
       break;
     }
   }
 
-  console.log("\n!FIM DO JOGO!");
+  console.log("\n=== FIM DO JOGO ===");
   console.log(`Jogador: ${nome}`);
   console.log(`Rodadas completadas: ${rodadaAtual}`);
   console.log(`Rodadas restantes: ${perguntas.length - rodadaAtual}`);
-  console.log(`Última resposta certa: ${ultimaRespostaCerta}`);
+  console.log(`Última resposta correta: ${ultimaRespostaCerta || "Nenhuma"}`);
   console.log(`Premiação final: R$${premioAtual.toLocaleString("pt-BR")}`);
 
   const jogarNovamente = readline.question("\nDeseja jogar novamente? (s/n): ");
